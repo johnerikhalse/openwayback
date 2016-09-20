@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.netpreserve.openwayback</groupId>
+        <artifactId>openwayback</artifactId>
+        <version>3.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>openwayback-ng</artifactId>
+    <packaging>jar</packaging>
+
+    <name>OpenWayback Next Generation</name>
+    <description>Complete rewrite of OpenWayback</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.netpreserve.openwayback</groupId>
+            <artifactId>openwayback-server-core</artifactId>
+            <version>3.0.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- build frontend -->
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>1.0</version>
+                <configuration>
+                    <workingDirectory>src/main/frontend</workingDirectory>
+                    <installDirectory>target</installDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>install node and npm</id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                        <configuration>
+                            <nodeVersion>v5.3.0</nodeVersion>
+                            <npmVersion>3.3.12</npmVersion>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>npm install</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <!-- Optional configuration which provides for running any npm command -->
+                        <configuration>
+                            <arguments>install</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>gulp build</id>
+                        <goals>
+                            <goal>gulp</goal>
+                        </goals>
+                        <configuration>
+                            <environmentVariables>
+                                <distDir>${basedir}/target/classes/frontend</distDir>
+                            </environmentVariables>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Create assembly with startup scripts and dependencies -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>appassembler-maven-plugin</artifactId>
+                <version>1.10</version>
+                <configuration>
+                    <!--<licenseHeaderFile>${basedir}/src/main/etc/license-header.txt</licenseHeaderFile>-->
+                    <programs>
+                        <program>
+                            <mainClass>org.netpreserve.openwayback.Main</mainClass>
+                            <id>owb</id>
+                        </program>
+                    </programs>
+                    <binFolder>bin</binFolder>
+                    <repositoryName>lib</repositoryName>
+                    <repositoryLayout>flat</repositoryLayout>
+                    <configurationDirectory>config</configurationDirectory>
+                    <endorsedDir>plugins</endorsedDir>
+                    <preAssembleDirectory>src/main/distfiles</preAssembleDirectory>
+                    <extraJvmArguments>-Dconfig.file=@BASEDIR@/config/application.conf</extraJvmArguments>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>assemble</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Create a distributable gzip archive -->
+            <!--            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <descriptor>src/main/etc/assembly.xml</descriptor>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>-->
+        </plugins>
+    </build>
+</project>
