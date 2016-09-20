@@ -20,6 +20,11 @@
         <module>wayback-webapp</module>
         <module>openwayback-resource-resolver</module>
         <module>dist</module>
+        <module>openwayback-resource-resolver-client</module>
+        <module>openwayback-resource-loader</module>
+        <module>openwayback-ng-plugin</module>
+        <module>openwayback-server-core</module>
+        <module>openwayback-ng</module>
     </modules>
 
     <profiles>
@@ -39,9 +44,10 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <website.url>http://github.com/iipc/openwayback</website.url>
         <org.springframework.version>3.0.6.RELEASE</org.springframework.version>
-        <org.glassfish.jersey.version>2.23.1</org.glassfish.jersey.version>
+        <org.glassfish.jersey.version>2.23.2</org.glassfish.jersey.version>
         <org.apache.logging.log4j.version>2.6.2</org.apache.logging.log4j.version>
         <webarchive.commons.version>2.0.0-SNAPSHOT</webarchive.commons.version>
+        <org.jwat.version>1.0.4</org.jwat.version>
         <github.name>openwayback</github.name>
     </properties>
 
@@ -355,6 +361,11 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>openwayback-resource-resolver</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.netpreserve.commons</groupId>
                 <artifactId>webarchive-commons-core</artifactId>
                 <version>${webarchive.commons.version}</version>
@@ -368,6 +379,32 @@
                 <groupId>org.netpreserve.commons</groupId>
                 <artifactId>webarchive-commons-cdx</artifactId>
                 <version>${webarchive.commons.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jwat</groupId>
+                <artifactId>jwat-common</artifactId>
+                <version>${org.jwat.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jwat</groupId>
+                <artifactId>jwat-gzip</artifactId>
+                <version>${org.jwat.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jwat</groupId>
+                <artifactId>jwat-arc</artifactId>
+                <version>${org.jwat.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jwat</groupId>
+                <artifactId>jwat-warc</artifactId>
+                <version>${org.jwat.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jwat</groupId>
+                <artifactId>jwat-archive</artifactId>
+                <version>${org.jwat.version}</version>
             </dependency>
 
             <dependency>
@@ -416,6 +453,34 @@
                 <groupId>org.glassfish.jersey.bundles.repackaged</groupId>
                 <artifactId>jersey-guava</artifactId>
                 <version>${org.glassfish.jersey.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jersey.core</groupId>
+                <artifactId>jersey-client</artifactId>
+                <version>${org.glassfish.jersey.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jersey.connectors</groupId>
+                <artifactId>jersey-grizzly-connector</artifactId>
+                <version>${org.glassfish.jersey.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jersey.test-framework</groupId>
+                <artifactId>jersey-test-framework-core</artifactId>
+                <version>${org.glassfish.jersey.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jersey.test-framework.providers</groupId>
+                <artifactId>jersey-test-framework-provider-grizzly2</artifactId>
+                <version>${org.glassfish.jersey.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.netflix.hystrix</groupId>
+                <artifactId>hystrix-core</artifactId>
+                <version>1.5.5</version>
             </dependency>
 
             <dependency>
